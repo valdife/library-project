@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1610061105 source:d:\users\bartek\documents\library-project\project-library\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
