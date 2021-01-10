@@ -36,15 +36,6 @@ int isExist(int tab[], int examined, int size) {
     return 0;
 }
 
-void clearBuffBook() {
-    strcpy(buffBook.title, "");
-    buffBook.relaseYear = -1;
-    buffBook.price = -1.1;
-    strcpy(buffBook.author1, "");
-    strcpy(buffBook.author2, "");
-    strcpy(buffBook.author3, "");
-}
-
 // (a).
 void printList(listElement *list) {
     FILE *fp = fopen("a.txt", "w");
@@ -226,12 +217,10 @@ int main()
     library = (listElement*) malloc (sizeof(listElement));
     library->val = buffBook;
     library->next = NULL;
-    clearBuffBook();
 
     while(fscanf(fp1, "%s %d %f %s %s %s", buffBook.title, &buffBook.relaseYear,
                   &buffBook.price, buffBook.author1, buffBook.author2, buffBook.author3) != EOF) {
         appendList(library, buffBook);
-        clearBuffBook();
     }
 
     while(!end) {
