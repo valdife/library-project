@@ -1,69 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct book {
-    char title[100];
-    int relaseYear;
-    float price;
-    char author1[100];
-    char author2[100];
-    char author3[100];
-} Book;
-
-typedef struct element {
-    struct element *next;
-    Book val;
-} listElement;
-
-typedef struct authorElem {
-    struct authorElem *next;
-    char val[100];
-} authorElem;
+#include "structs.h"
 
 listElement *library;
 authorElem *authors;
 Book buffBook;
-
-void appendList(listElement *list, Book newBook) {
-    listElement *pt, *newEl;
-    pt = list;
-    while (pt->next != NULL)
-        pt = pt->next;
-    newEl = (listElement*) malloc (sizeof(listElement));
-    newEl->val = newBook;
-    newEl->next = NULL;
-    pt->next = newEl;
-}
-
-void appendAuthorList(authorElem *list, char author[100]) {
-    authorElem *pt, *newEl;
-    pt = list;
-    while (pt->next != NULL)
-        pt = pt->next;
-    newEl = (authorElem*) malloc (sizeof(authorElem));
-    strcpy(newEl->val, author);
-    newEl->next = NULL;
-    pt->next = newEl;
-}
-
-void clearBuffBook() {
-    strcpy(buffBook.title, "");
-    buffBook.relaseYear = -1;
-    buffBook.price = -1.1;
-    strcpy(buffBook.author1, "");
-    strcpy(buffBook.author2, "");
-    strcpy(buffBook.author3, "");
-}
-
-int isExist(int tab[], int examined, int size) {
-    int i;
-    for (i = 0; i < size; i++) {
-        if (tab[i] == 0) break;
-        if (tab[i] == examined) return 1;
-    }
-    return 0;
-}
 
 void bubbleSort(int tab[], int size) {
     int tempVal, i, j, changed;
@@ -83,6 +25,24 @@ void bubbleSort(int tab[], int size) {
         }
         if (!changed) break;
     }
+}
+
+int isExist(int tab[], int examined, int size) {
+    int i;
+    for (i = 0; i < size; i++) {
+        if (tab[i] == 0) break;
+        if (tab[i] == examined) return 1;
+    }
+    return 0;
+}
+
+void clearBuffBook() {
+    strcpy(buffBook.title, "");
+    buffBook.relaseYear = -1;
+    buffBook.price = -1.1;
+    strcpy(buffBook.author1, "");
+    strcpy(buffBook.author2, "");
+    strcpy(buffBook.author3, "");
 }
 
 // (a).
