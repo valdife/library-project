@@ -5,3 +5,9 @@ Adana 1999 40.0 Perro Ulumulu X
 750 2011 44.4 Malik GrzegorzFlojdowski X
 Momo 1988 50.0 Lolo Malik GrzegorzFlojdowski
 Nyanyo 2007 50.0 Dzioo X X
+AkademiaPrankow 2018 50 Friz MiniMike X
+Kopytko 2011 33.333 Huan Perro X
+Niedostepny 2017 3.00 Malik X X
+Kutuk3 2011 6.33 Satas Nio X
+Kutuk1 1966 6.33 Satas Nio X
+650 1966 50.7 Malik Ulumulu X

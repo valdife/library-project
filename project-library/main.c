@@ -25,7 +25,6 @@ listElement *library;
 authorElem *authors;
 Book buffBook;
 
-
 void appendList(listElement *list, Book newBook) {
     listElement *pt, *newEl;
     pt = list;
@@ -57,14 +56,43 @@ void clearBuffBook() {
     strcpy(buffBook.author3, "");
 }
 
+int isExist(int tab[], int examined, int size) {
+    int i;
+    for (i = 0; i < size; i++) {
+        if (tab[i] == 0) break;
+        if (tab[i] == examined) return 1;
+    }
+    return 0;
+}
+
+void bubbleSort(int tab[], int size) {
+    int tempVal, i, j, changed;
+    for (i = 0; i < size - 1; i++) {
+        if (tab[i] == 0)
+            break;
+        changed = 0;
+        for (j = 0; j < size - 1 - i; j++) {
+            if (tab[j+1] == 0)
+                break;
+            if (tab[j] > tab[j+1]) {
+                tempVal = tab[j];
+                tab[j] = tab[j+1];
+                tab[j+1] = tempVal;
+                changed = 1;
+            }
+        }
+        if (!changed) break;
+    }
+}
+
 // (a).
 void printList(listElement *list) {
     FILE *fp = fopen("a.txt", "w");
     listElement *pt = list;
     while (pt != NULL) {
-        printf("Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1: %s Autor2: %s Autor3: %s\n\n",
+        printf("Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1: %s   Autor2: %s   Autor3: %s\n\n",
                 pt->val.title, pt->val.relaseYear, pt->val.price, pt->val.author1, pt->val.author2, pt->val.author3);
-        fprintf(fp, "Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1: %s Autor2: %s Autor3: %s\n\n",
+        fprintf(fp, "Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1:%s   Autor2:%s   Autor3: %s\n\n",
                  pt->val.title, pt->val.relaseYear, pt->val.price, pt->val.author1, pt->val.author2, pt->val.author3);
         pt = pt->next;
     }
@@ -102,9 +130,9 @@ void printOldestBookPrice(listElement *list) {
     }
     fclose(fp);
 }
-
 // (c).
 void printBooksOfAuthor(listElement *list, char author[]) {
+    int found;
     if(!strcmp(author, "X"))
         printf("Znak X nie jest autorem, wprowadz poprawna nazwe autora. Resetuje program...\n");
     else {
@@ -117,18 +145,48 @@ void printBooksOfAuthor(listElement *list, char author[]) {
             || !strcmp(pt->val.author3, author)) {
                 fprintf(fp, "%s, ", pt->val.title);
                 printf("%s, ", pt->val.title);
+                found = 1;
             }
             pt = pt->next;
         }
+        if (!found) printf("Nie znaleziono zadnej ksiazki tego autora w bibliotece!");
         printf("\n");
         fclose(fp);
     }
 }
-
 // (d).
-void printYearsReport() {
-}
+void printYearsReport(listElement *list) {
+    FILE *fp = fopen("d.txt", "w");
+    listElement *pt = list;
+    int yearsTab[1000] = {0}, i = 0, j = 0;
+    int size = sizeof(yearsTab)/sizeof(int);
 
+    while (pt != NULL) {
+        if (!isExist(yearsTab, pt->val.relaseYear, size)) {
+            yearsTab[i] = pt->val.relaseYear;
+            i++;
+        }
+        pt = pt->next;
+    }
+    bubbleSort(yearsTab, size);
+
+    printf("Ksiazki posortowane wedlug rocznika: \n");
+    fprintf(fp,"Ksiazki posortowane wedlug rocznika: \n");
+    for(j = 0; j < i; j++) {
+        pt = list;
+        printf("\tRok %d: \n", yearsTab[j]);
+        fprintf(fp,"\tRok %d: \n", yearsTab[j]);
+        while (pt != NULL) {
+            if (pt->val.relaseYear == yearsTab[j]) {
+                printf("\t\tTytul: %s\n\t\tAutor nr 1: %s\n\n", pt->val.title, pt->val.author1);
+                fprintf(fp,"\t\tTytul: %s\n\t\tAutor nr 1: %s\n\n", pt->val.title, pt->val.author1);
+            }
+            pt = pt->next;
+        }
+    }
+
+    fclose(fp);
+}
 // (e).
 void printAllBooksOfAllAuthors(listElement *list) {
     FILE *fp = fopen("e.txt", "w");
@@ -140,7 +198,7 @@ void printAllBooksOfAllAuthors(listElement *list) {
     char except[] = "X";
     int flag1, flag2, flag3;
     char author1[100], author2[100], author3[100], authorFromList[100];
-    //stworzenie listy unikalnych autorow
+
     while (bookPt != NULL) {
         flag1 = 1; flag2 = 1; flag3 = 1;
         strcpy(author1, bookPt->val.author1);
@@ -171,14 +229,15 @@ void printAllBooksOfAllAuthors(listElement *list) {
 
     while (authorPt != NULL) {
         strcpy(authorFromList, authorPt->val);
-        printf("Posiadamy nastepujace ksiazki (wspol)autorstwa %s: \n", authorFromList);
-        fprintf(fp, "Posiadamy nastepujace ksiazki (wspol)autorstwa %s: \n", authorFromList);
+        printf("Posiadamy nastepujace ksiazki autorstwa %s: \n", authorFromList);
+        fprintf(fp, "Posiadamy nastepujace ksiazki autorstwa %s: \n", authorFromList);
         while (bookPt != NULL) {
             strcpy(author1, bookPt->val.author1);
             strcpy(author2, bookPt->val.author2);
             strcpy(author3, bookPt->val.author3);
 
-            if ((strcmp(authorFromList, author1) == 0) || (strcmp(authorFromList, author2) == 0) || (strcmp(authorFromList, author3) == 0)) {
+            if ((strcmp(authorFromList, author1) == 0) || (strcmp(authorFromList, author2) == 0)
+                || (strcmp(authorFromList, author3) == 0)) {
                 printf("\tTytul ksiazki: %s\n", bookPt->val.title);
                 fprintf(fp, "\tTytul ksiazki: %s\n", bookPt->val.title);
             }
@@ -186,6 +245,7 @@ void printAllBooksOfAllAuthors(listElement *list) {
         }
         bookPt = list;
         authorPt = authorPt->next;
+        printf("\n");
     }
 
     fclose(fp);
@@ -233,7 +293,7 @@ int main()
                 printBooksOfAuthor(library, author);
                 break;
             case '4':
-                printYearsReport();
+                printYearsReport(library);
                 break;
             case '5':
                 printAllBooksOfAllAuthors(library);
