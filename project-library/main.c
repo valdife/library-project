@@ -5,7 +5,6 @@
 
 listElement *library;
 authorElem *authors;
-Book buffBook;
 
 void bubbleSort(int tab[], int size) {
     int tempVal, i, j, changed;
@@ -41,9 +40,9 @@ void printList(listElement *list) {
     FILE *fp = fopen("a.txt", "w");
     listElement *pt = list;
     while (pt != NULL) {
-        printf("Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1: %s   Autor2: %s   Autor3: %s\n\n",
+        printf("Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1: %s   Autor2: %s   \nAutor3: %s\n\n",
                 pt->val.title, pt->val.relaseYear, pt->val.price, pt->val.author1, pt->val.author2, pt->val.author3);
-        fprintf(fp, "Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1:%s   Autor2:%s   Autor3: %s\n\n",
+        fprintf(fp, "Tytul: %s\nRok wydania: %d  Cena: %.2f \nAutor1:%s   Autor2:%s   \nAutor3: %s\n\n",
                  pt->val.title, pt->val.relaseYear, pt->val.price, pt->val.author1, pt->val.author2, pt->val.author3);
         pt = pt->next;
     }
@@ -109,7 +108,7 @@ void printBooksOfAuthor(listElement *list, char author[]) {
 void printYearsReport(listElement *list) {
     FILE *fp = fopen("d.txt", "w");
     listElement *pt = list;
-    int yearsTab[1000] = {0}, i = 0, j = 0;
+    int yearsTab[2000] = {0}, i = 0, j = 0;
     int size = sizeof(yearsTab)/sizeof(int);
 
     while (pt != NULL) {
@@ -206,6 +205,7 @@ int main()
 {
     int end = 0;
     char option, author[100];
+    Book buffBook;
     FILE *fp1 = fopen("database.txt", "r");
     if (fp1 == NULL) {
         printf("Plik sie nie otworzyl.");
@@ -213,7 +213,6 @@ int main()
     }
     fscanf(fp1, "%s %d %f %s %s %s", buffBook.title, &buffBook.relaseYear,
         &buffBook.price, buffBook.author1, buffBook.author2, buffBook.author3);
-
     library = (listElement*) malloc (sizeof(listElement));
     library->val = buffBook;
     library->next = NULL;
@@ -251,7 +250,7 @@ int main()
                 end = 1;
                 break;
             default:
-                printf("Nie ma opcji o podanym numerze, sprobuj ponownie.");
+                printf("Nie ma opcji o podanym numerze, sprobuj ponownie.\n");
                 break;
         }
     }
