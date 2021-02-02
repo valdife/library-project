@@ -31,17 +31,22 @@ zatwierdzić klawiszem ENTER. Przykładowo, jeżeli
 chcemy wyświetlić wszystkie książki widniejące w
 bibliotece, należy po prostu nacisnąć klawisz "1" (bez
 cudzysłowu), a następnie wcisnąć klawisz ENTER.
+
 • Program rozróżnia wielkie i małe litery, należy o tym
 pamiętać wpisując nazwę autora.
+
 • Program nie obsługuje polskich znaków.
+
 • Program znajdzie autora, jeżeli jego imię i nazwisko
 zostanie zapisane w takim formacie: ImieNazwisko (bez
 odstępu między imieniem i nazwiskiem, bez polskich
 znaków). Na przykład: (AdamMickiewicz). Jeżeli zostanie
 wprowadzony odstęp, program nie zadziała poprawnie.
+
 • Jeżeli według programu jednym z autorów książki jest
 "X", oznacza to, że program wykrył, iż dana książka ma
 mniej niż 3 autorów, a w miejsce autorów
 nieistniejących wstawił symbol "X". Nie należy wpisywać
 symbolu “X” jako autora podczas wyszukiwania (opcja nr
 3), gdyż program poinformuje, że to niedozwolone.
+
