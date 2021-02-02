@@ -51,3 +51,5 @@ nieistniejących wstawił symbol "X". Nie należy wpisywać
 symbolu “X” jako autora podczas wyszukiwania (opcja nr
 3), gdyż program poinformuje, że to niedozwolone.
 
+
+Plik database.txt to format przykładowego pliku pozwalającego na prawidłową pracę programu.
