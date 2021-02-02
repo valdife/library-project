@@ -25,6 +25,7 @@ klawiaturze.)
 
 
 Zasady użytkowania:
+
 • Cyfry widniejące przy wyżej wymienionych operacjach są
 cyframi, jakie należy odpowiednio wprowadzić i
 zatwierdzić klawiszem ENTER. Przykładowo, jeżeli
